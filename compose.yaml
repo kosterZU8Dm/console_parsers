@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+
+  parser_nosql_db:
+    image: mongo:7.0
+    restart: always
+#    environment:
+#      MONGO_INITDB_ROOT_USERNAME: root
+#      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - '27017:27017'
+    volumes:
+      - ./compose_data/dbdata:/data/db
+
+  parser:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+#     target: build
+    container_name: flask-app
+    restart: always
+    command: ...
+    depends_on:
+      - parser_nosql_db
+    healthcheck:
+      test: ["CMD-SHELL", " || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 3

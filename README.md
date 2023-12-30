@@ -1,0 +1,1 @@
+docker run --name common_mongodb -p 27017:27017 -d mongo:7.0
